@@ -1,0 +1,6 @@
+﻿{
+  "ConsumerKey" : "ConsumerKey",
+  "ConsumerSecret" : "ConsumerSecret めっちゃ長いやつ",
+  "AccessToken" : "AccessToken",
+  "AccessSecret" : "AccessSecret　めっちゃ長いやつ。これら４つを埋めたら、ファイル名を 'keys_SAMPLE.json' から 'keys.json' に変えて保存してください"
+}
