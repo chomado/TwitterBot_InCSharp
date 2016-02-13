@@ -1,4 +1,4 @@
-# TwitterBot in C#
+# TwitterBot in C＃.
   
 Twitter bot を C# で書きます。他の人も clone して (４行設定書き換えたら) 簡単に使えるように設計しています    
 
