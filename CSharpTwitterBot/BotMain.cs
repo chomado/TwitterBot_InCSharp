@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using CoreTweet;
+using Newtonsoft.Json;
+using System;
+using System.IO;
 using System.Threading.Tasks;
-using CoreTweet;
-using Newtonsoft;
 
 namespace CSharpTwitterBot
 {
+    /// <summary>
+    /// tweet bot の、メインのクラス。実際につぶやく処理が書かれている。
+    /// </summary>
     class BotMain
     {
         public static void Main(string[] args)
@@ -15,29 +16,49 @@ namespace CSharpTwitterBot
             MainAsync().Wait();
         }
 
+        /// <summary>
+        /// メイン処理
+        /// </summary>
         private static async Task MainAsync()
         {
             var keys = MyTokens;
-
             var tokens = Tokens.Create(keys.ConsumerKey, keys.ConsumerSecret, keys.AccessToken, keys.AccessSecret);
-            var message = $@"C# からの投稿テストです。
-毎回 key.json ファイルからアクセストークンを読み込むのではなく、キャッシュするようにしました。
-{DateTime.Now}";
+
+            var message = TweetText();
+
+            //Console.WriteLine(message);
             await tokens.Statuses.UpdateAsync(new { status = message });
         }
 
-        // アクセストークンなど、投稿に必要なキーを取得。（キャッシュがあればキャッシュから。無かったらファイルから読み込む）
+        /// <summary>
+        /// 投稿するツイートの文章を組み立てる。
+        /// </summary>
+        static string TweetText()
+        {
+            var tweetLine = TweetsList.RandomTweet();
+            return $"C# からの投稿。登録された呟きListからランダムに１行つぶやきます。\n{tweetLine}\n {DateTime.Now}"; ;
+        }
+
+        #region OAuth 認証
+
+        /// <summary>
+        /// アクセストークンなど、投稿に必要なキーを取得。（キャッシュがあればキャッシュから。無かったらファイルから読み込む）
+        /// </summary>
         private static Keys MyTokens => _myTokens ?? (_myTokens = ReadTokens());
         static Keys _myTokens = null;
 
-        // key.json ファイルから、アクセストークンなどを読み込む。
+        /// <summary>
+        /// key.json ファイルから、アクセストークンなどを読み込む。
+        /// </summary>
         private static Keys ReadTokens()
         {
-            var json = System.IO.File.ReadAllText("AppConfig/keys.json");
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Keys>(json);
+            var json = File.ReadAllText("AppConfig/keys.json");
+            return JsonConvert.DeserializeObject<Keys>(json);
         }
 
-        // 投稿に使う各種キーの集まり。（型定義）
+        /// <summary>
+        /// 投稿に使う各種キーの集まり。（型定義）
+        /// </summary>
         public class Keys
         {
             public string ConsumerKey { get; set; }
@@ -45,5 +66,7 @@ namespace CSharpTwitterBot
             public string AccessToken { get; set; }
             public string AccessSecret { get; set; }
         }
+
+        #endregion
     }
 }
