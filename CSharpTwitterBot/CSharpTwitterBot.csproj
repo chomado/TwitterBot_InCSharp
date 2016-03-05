@@ -51,7 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TweetsList.cs" />
+    <Compile Include="TweetContents\TweetsDate.cs" />
+    <Compile Include="TweetContents\TweetsList.cs" />
     <Compile Include="BotMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,7 +66,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TweetContent\TweetsList.txt" />
+    <Content Include="TweetContentData\TweetsList.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

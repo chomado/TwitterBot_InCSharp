@@ -35,8 +35,13 @@ namespace CSharpTwitterBot
         /// </summary>
         static string TweetText()
         {
-            var tweetLine = TweetsList.RandomTweet();
-            return $"C# からの投稿。登録された呟きListからランダムに１行つぶやきます。\n{tweetLine}\n {DateTime.Now}"; ;
+            var tweetLine = TweetContents.TweetsList.RandomTweet();
+            var passedTime = TweetContents.TweetsDate.FormatPassedTime();
+
+            return $@"C# からの投稿。
+{tweetLine}
+{passedTime}
+"; 
         }
 
         #region OAuth 認証
