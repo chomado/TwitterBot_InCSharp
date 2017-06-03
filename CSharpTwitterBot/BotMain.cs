@@ -57,7 +57,7 @@ namespace CSharpTwitterBot
         /// </summary>
         private static Keys ReadTokens()
         {
-            var json = File.ReadAllText("AppConfig/keys.json");
+            var json = File.ReadAllText("../../AppConfig/keys.json");
             return JsonConvert.DeserializeObject<Keys>(json);
         }
 
