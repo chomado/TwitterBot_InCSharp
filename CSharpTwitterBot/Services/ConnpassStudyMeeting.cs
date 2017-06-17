@@ -14,7 +14,7 @@ namespace CSharpTwitterBot.Services
     {
         public Uri ApiBaseUri { get => new Uri("https://connpass.com/api/v1/event/"); }
 
-        public async Task<List<StudyMeeting>> GetStudyMeetingList(List<string> keywords)
+        public async Task<IEnumerable<StudyMeeting>> GetStudyMeetingList(IEnumerable<string> keywords)
         {
             using (var client = new HttpClient())
             {
@@ -22,9 +22,7 @@ namespace CSharpTwitterBot.Services
 
                 client.DefaultRequestHeaders.Add(name: "User-Agent", value: "Madoka");
 
-                var parameter = keywords.Count > 1 
-                    ? string.Join(separator: ",", values: keywords) 
-                    : keywords.FirstOrDefault();
+                var parameter = string.Join(separator: ",", values: keywords);
 
                 Debug.WriteLine(parameter);
 
@@ -33,32 +31,25 @@ namespace CSharpTwitterBot.Services
 
                 var connpassResponce = JsonConvert.DeserializeObject<Models.Connpass.RootObject>(await response.Content.ReadAsStringAsync());
 
-                Console.WriteLine($"aaaaaaaaaaaaaaaaa {connpassResponce.Events.FirstOrDefault()?.Title}");
+                Console.WriteLine($"{connpassResponce.Events.FirstOrDefault()?.Title}");
                 
                 return ConvertConnpassResponce2StudyMeetings(connpassResponce);
             }
         }
 
-        private List<StudyMeeting> ConvertConnpassResponce2StudyMeetings(Models.Connpass.RootObject connpasses)
+        private IEnumerable<StudyMeeting> ConvertConnpassResponce2StudyMeetings(Models.Connpass.RootObject connpasses)
         {
             // note: connpass には複数の勉強会情報が入っている
 
-            StudyMeeting ConvertConnpassEventToStudyMeeting(Models.Connpass.Event connpassEvent) => new StudyMeeting
+            StudyMeeting convertConnpassEventToStudyMeeting(Models.Connpass.Event connpassEvent) => new StudyMeeting
             {
                 Title = connpassEvent.Title,
                 StartingAt = connpassEvent.StartedAt,
                 EventPageUri = new Uri(connpassEvent.EventUrl),
-                TwitterHashTags = new List<string>() { connpassEvent.HashTag }, // "JXUG #mspjp #gakusei_wakaru"
+                TwitterHashTags = new [] { connpassEvent.HashTag }, // "JXUG #mspjp #gakusei_wakaru"
             };
 
-            var studyMeetingList = new List<StudyMeeting>();
-
-            foreach (var connpassEvent in connpasses.Events)
-            {
-                studyMeetingList.Add(ConvertConnpassEventToStudyMeeting(connpassEvent));
-            }
-
-            return studyMeetingList;
+            return connpasses.Events.Select(i => convertConnpassEventToStudyMeeting(i));
         }
     }
 }

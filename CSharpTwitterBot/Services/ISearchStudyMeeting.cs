@@ -10,6 +10,6 @@ namespace CSharpTwitterBot.Services
     public interface ISearchStudyMeeting
     {
         Uri ApiBaseUri { get; }
-        Task<List<StudyMeeting>> GetStudyMeetingList(List<string> keywords);
+        Task<IEnumerable<StudyMeeting>> GetStudyMeetingList(IEnumerable<string> keywords);
     }
 }

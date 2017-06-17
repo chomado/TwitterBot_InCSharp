@@ -11,7 +11,7 @@ namespace CSharpTwitterBot.Models
         public string Title { get; set; }
         public Uri EventPageUri { get; set; }
         public DateTime StartingAt { get; set; }
-        public List<string> TwitterHashTags { get; set; }
+        public IEnumerable<string> TwitterHashTags { get; set; }
 
     }
 }
