@@ -33,13 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CoreTweet, Version=0.6.1.267, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CoreTweet.0.6.1.267\lib\net45\CoreTweet.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="CoreTweet, Version=0.8.0.384, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CoreTweet.0.8.0.384\lib\net45\CoreTweet.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,6 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ConnpassResponce.cs" />
+    <Compile Include="Models\StudyMeeting.cs" />
+    <Compile Include="Services\ConnpassStudyMeeting.cs" />
+    <Compile Include="Services\ISearchStudyMeeting.cs" />
     <Compile Include="TweetContents\TweetsDate.cs" />
     <Compile Include="TweetContents\TweetsList.cs" />
     <Compile Include="BotMain.cs" />
@@ -60,9 +62,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="AppConfig\keys.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="AppConfig\keys.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

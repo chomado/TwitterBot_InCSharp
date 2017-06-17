@@ -1,8 +1,12 @@
-﻿using CoreTweet;
+﻿#define DEBUG
+
+using CoreTweet;
 using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using CSharpTwitterBot.Services;
+using System.Collections.Generic;
 
 namespace CSharpTwitterBot
 {
@@ -26,6 +30,11 @@ namespace CSharpTwitterBot
 
             var message = TweetText();
 
+#if DEBUG
+            var keywords = new List<string> { "JXUG" };
+            var connpass = new ConnpassStudyMeeting();
+            var test = await connpass.GetStudyMeetingList(keywords);
+#endif
             //Console.WriteLine(message);
             await tokens.Statuses.UpdateAsync(new { status = message });
         }
